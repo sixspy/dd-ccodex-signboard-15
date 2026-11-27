@@ -47,12 +47,21 @@ def evaluate_screen(body: dict, authorization: str | None = Header(default=None)
                 )
                 result["play"] = {"kind": "playlist", "items": items}
             return result
-        pub = conn.execute(
-            "SELECT * FROM publications WHERE screen_id=? AND official=1 AND status='published'",
+        pubs = conn.execute(
+            "SELECT * FROM publications WHERE screen_id=? AND official=1 AND status='published' "
+            "ORDER BY id",
             (screen_id,),
-        ).fetchone()
-        if not pub:
+        ).fetchall()
+        if not pubs:
             return {"source": "empty", "play": None, "now_hm": now_hm, "reason": "无正式发布"}
+        if len(pubs) > 1:
+            # 同屏双正式是账实事故：禁止静默挑一行假绿，必须显式亮红灯
+            raise HTTPException(
+                409,
+                f"正式发布不唯一：屏幕{screen_id}存在{len(pubs)}行并存正式发布，"
+                f"版本{sorted(p['version'] for p in pubs)}，求值拒绝假绿",
+            )
+        pub = pubs[0]
         window = conn.execute(
             "SELECT * FROM time_windows WHERE id=?",
             (pub["window_id"],),

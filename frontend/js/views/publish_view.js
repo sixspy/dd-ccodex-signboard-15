@@ -5,7 +5,7 @@ window.SB_VIEWS["publish-view"] = {
     <div>
       <div class="panel">
         <h2>发布上屏</h2>
-        <p class="lead">甲：正式事务直写；乙：影子草案再升正。两边不得混用。</p>
+        <p class="lead">甲：正式事务直写；乙：影子草案再升正。两边不得混用。同屏正式发布互斥，败方整笔拒写、正式区零改，只留争用痕。</p>
         <div class="row-form">
           <input v-model.number="form.screen_id" type="number" placeholder="屏幕ID" />
           <input v-model.number="form.playlist_id" type="number" placeholder="清单ID" />
@@ -22,7 +22,7 @@ window.SB_VIEWS["publish-view"] = {
         <p v-if="msg">{{ msg }}</p>
       </div>
       <div class="panel">
-        <h3>正式发布</h3>
+        <h3>正式发布（同屏唯一）</h3>
         <table>
           <thead><tr><th>ID</th><th>屏幕</th><th>清单</th><th>时段</th><th>版本</th><th>摘要</th></tr></thead>
           <tbody>
@@ -32,10 +32,13 @@ window.SB_VIEWS["publish-view"] = {
             </tr>
           </tbody>
         </table>
+        <p class="hint" v-if="duplicateScreens.length">
+          账实告警：以下屏幕正式发布不唯一 → {{ duplicateScreens.join("、") }}，求值将拒绝假绿
+        </p>
       </div>
     </div>
     <div class="panel">
-      <h3>影子草案</h3>
+      <h3>影子草案（乙路径，正式区零改）</h3>
       <table>
         <thead><tr><th>ID</th><th>屏幕</th><th>状态</th><th>摘要</th></tr></thead>
         <tbody>
@@ -44,32 +47,61 @@ window.SB_VIEWS["publish-view"] = {
           </tr>
         </tbody>
       </table>
+      <h3>争用痕（败方零正式，只留痕）</h3>
+      <table>
+        <thead><tr><th>操作者</th><th>屏幕</th><th>详情</th></tr></thead>
+        <tbody>
+          <tr v-for="c in contentions" :key="c.id">
+            <td>{{ c.actor }}</td><td>#{{ c.entity_id }}</td><td>{{ c.detail }}</td>
+          </tr>
+          <tr v-if="!contentions.length"><td colspan="3" class="hint">暂无争用记录</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>`,
   data() {
     return {
       form: { screen_id: 1, playlist_id: 1, window_id: 1, summary: "编排发布" },
-      shadowId: null, official: [], shadows: [], error: "", msg: ""
+      shadowId: null, official: [], shadows: [], contentions: [], error: "", msg: ""
     };
+  },
+  computed: {
+    duplicateScreens() {
+      const seen = {};
+      const dup = new Set();
+      for (const p of this.official) {
+        seen[p.screen_code] = (seen[p.screen_code] || 0) + 1;
+        if (seen[p.screen_code] > 1) dup.add(p.screen_code);
+      }
+      return [...dup];
+    }
   },
   async mounted() { await this.reload(); },
   methods: {
     async reload() {
       this.official = (await SB.api("/api/publish/official")).items;
       this.shadows = (await SB.api("/api/publish/shadows")).items;
+      const history = await SB.api("/api/history?limit=300");
+      this.contentions = history.items.filter(h => h.entity_kind === "publish_contention");
     },
     async official() {
       this.error = ""; this.msg = "";
       try {
         const r = await SB.api("/api/publish/official", { method: "POST", body: JSON.stringify(this.form) });
-        this.msg = "正式发布完成 version=" + r.version; await this.reload();
-      } catch (e) { this.error = e.message; }
+        this.msg = "正式发布完成 version=" + r.version + "（同屏旧版本已同事务替换）";
+        await this.reload();
+      } catch (e) {
+        this.error = e.message.includes("争用")
+          ? "同屏正式发布互斥：本笔整笔拒写，正式区零改，已记争用痕。" + e.message
+          : e.message;
+        await this.reload();
+      }
     },
     async shadow() {
       this.error = ""; this.msg = "";
       try {
         const r = await SB.api("/api/publish/shadow", { method: "POST", body: JSON.stringify(this.form) });
-        this.msg = "影子已写 id=" + r.id; this.shadowId = r.id; await this.reload();
+        this.msg = "影子已写 id=" + r.id + "（正式区零改）"; this.shadowId = r.id; await this.reload();
       } catch (e) { this.error = e.message; }
     },
     async promote() {
@@ -77,7 +109,12 @@ window.SB_VIEWS["publish-view"] = {
       try {
         const r = await SB.api("/api/publish/shadow/" + this.shadowId + "/promote", { method: "POST", body: "{}" });
         this.msg = "升正完成 version=" + r.version; await this.reload();
-      } catch (e) { this.error = e.message; }
+      } catch (e) {
+        this.error = e.message.includes("争用")
+          ? "升正撞上同屏在途正式发布：整笔拒写，正式区零改，已记争用痕。" + e.message
+          : e.message;
+        await this.reload();
+      }
     }
   }
 };

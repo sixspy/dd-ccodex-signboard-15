@@ -15,6 +15,7 @@ def list_history(limit: int = 100, authorization: str | None = Header(default=No
     with connect() as conn:
         rows = rows_to_list(
             conn.execute(
+                # 不做实体白名单：争用痕（*_contention）与常规变更同源可追溯
                 "SELECT * FROM change_history ORDER BY id DESC LIMIT ?",
                 (max(1, min(limit, 300)),),
             ).fetchall()

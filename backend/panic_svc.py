@@ -4,13 +4,32 @@ from __future__ import annotations
 import time
 from fastapi import APIRouter, Header, HTTPException
 
-from audit_svc import write_audit, write_history
+from audit_svc import write_audit, write_contention, write_history
 from auth import current_user, require_writer
 from db import connect, rows_to_list
-from locks import acquire, release
+from locks import LockBusy, acquire, release
 from validators import require_positive_int, require_title
 
 router = APIRouter(prefix="/api/panic", tags=["panic"])
+
+
+def _acquire_publish_lock(screen_id: int, user: dict, detail: str) -> str:
+    lock_key = f"publish:{screen_id}"
+    try:
+        acquire(lock_key, user["username"])
+    except LockBusy as exc:
+        write_contention(
+            "panic",
+            screen_id,
+            user["username"],
+            f"紧急撤屏争用败方，整笔拒写：{detail}",
+            {"lock_key": lock_key, "winner": exc.holder},
+        )
+        raise HTTPException(
+            409,
+            f"同屏正式发布互斥争用：{exc.holder} 持锁在途，撤屏整笔拒写且正式区零改",
+        ) from exc
+    return lock_key
 
 
 @router.get("/events")
@@ -52,8 +71,7 @@ def panic_official(body: dict, authorization: str | None = Header(default=None))
     require_writer(user)
     screen_id = require_positive_int(body.get("screen_id"), "屏幕编号")
     reason = require_title(body.get("reason") or "紧急撤屏", "原因")
-    lock_key = f"publish:{screen_id}"
-    acquire(lock_key, user["username"])
+    lock_key = _acquire_publish_lock(screen_id, user, reason)
     try:
         with connect() as conn:
             screen = conn.execute("SELECT * FROM screens WHERE id=?", (screen_id,)).fetchone()
@@ -112,8 +130,7 @@ def promote_panic(shadow_id: int, authorization: str | None = Header(default=Non
             raise HTTPException(409, "影子不可升正")
         screen_id = sh["screen_id"]
         reason = sh["reason"]
-    lock_key = f"publish:{screen_id}"
-    acquire(lock_key, user["username"])
+    lock_key = _acquire_publish_lock(screen_id, user, f"升正撤屏影子 {shadow_id}：{reason}")
     try:
         with connect() as conn:
             conn.execute("DELETE FROM publications WHERE screen_id=? AND official=1", (screen_id,))

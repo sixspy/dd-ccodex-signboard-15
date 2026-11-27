@@ -29,6 +29,27 @@ def write_history(entity_kind: str, entity_id: int, action: str, detail: str, ac
         conn.commit()
 
 
+def write_contention(scope: str, screen_id: int, actor: str, detail: str, payload: dict) -> None:
+    """争用败方留痕：审计与变更历史同源写齐，正式区零改。
+
+    scope 取 publish / panic / override，action 分别落
+    publish.contention / panic.contention / override.contention。
+    """
+    action = f"{scope}.contention"
+    body = {"scope": scope, "screen_id": screen_id, **payload}
+    with connect() as conn:
+        conn.execute(
+            "INSERT INTO audit_log(actor,action,payload,created_at) VALUES(?,?,?,?)",
+            (actor, action, json.dumps(body, ensure_ascii=False), time.time()),
+        )
+        conn.execute(
+            "INSERT INTO change_history(entity_kind,entity_id,action,detail,actor,created_at) "
+            "VALUES(?,?,?,?,?,?)",
+            (f"{scope}_contention", screen_id, action, detail, actor, time.time()),
+        )
+        conn.commit()
+
+
 @router.get("/recent")
 def recent(limit: int = 50, authorization: str | None = Header(default=None)):
     current_user(authorization)
