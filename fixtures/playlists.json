@@ -1,0 +1,34 @@
+[
+  {
+    "code": "pl_lobby_day",
+    "title": "大堂日间清单",
+    "status": "ready",
+    "transition": "fade",
+    "loop": true,
+    "owner": "admin"
+  },
+  {
+    "code": "pl_lift_loop",
+    "title": "电梯厅循环",
+    "status": "ready",
+    "transition": "cut",
+    "loop": true,
+    "owner": "writer"
+  },
+  {
+    "code": "pl_event_temp",
+    "title": "活动临时清单",
+    "status": "draft",
+    "transition": "slide_left",
+    "loop": true,
+    "owner": "writer"
+  },
+  {
+    "code": "pl_meet_guide",
+    "title": "会议导览清单",
+    "status": "ready",
+    "transition": "fade",
+    "loop": false,
+    "owner": "admin"
+  }
+]

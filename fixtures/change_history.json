@@ -1,0 +1,42 @@
+[
+  {
+    "entity_kind": "publication",
+    "entity_id": 1,
+    "action": "publish_official",
+    "detail": "大堂日间正式发布",
+    "actor": "admin",
+    "age_hours": 5
+  },
+  {
+    "entity_kind": "publication",
+    "entity_id": 2,
+    "action": "publish_official",
+    "detail": "电梯厅循环正式发布",
+    "actor": "writer",
+    "age_hours": 4
+  },
+  {
+    "entity_kind": "asset",
+    "entity_id": 1,
+    "action": "create",
+    "detail": "创建欢迎图",
+    "actor": "admin",
+    "age_hours": 48
+  },
+  {
+    "entity_kind": "playlist",
+    "entity_id": 1,
+    "action": "patch",
+    "detail": "清单状态=ready",
+    "actor": "admin",
+    "age_hours": 20
+  },
+  {
+    "entity_kind": "window",
+    "entity_id": 1,
+    "action": "create",
+    "detail": "创建工作日日间",
+    "actor": "admin",
+    "age_hours": 72
+  }
+]

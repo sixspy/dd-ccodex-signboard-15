@@ -1,0 +1,95 @@
+:root {
+  --bg: #0f1b2d;
+  --panel: #16263d;
+  --ink: #e8eef7;
+  --muted: #8fa3bf;
+  --accent: #f0a202;
+  --accent2: #3ecf8e;
+  --danger: #ff6b6b;
+  --line: rgba(255,255,255,.08);
+  --rail: #0b1422;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(240,162,2,.18), transparent 55%),
+    radial-gradient(900px 500px at 90% 0%, rgba(62,207,142,.12), transparent 50%),
+    linear-gradient(180deg, #0c1626, #13233a 40%, #0f1b2d);
+}
+.topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 28px; border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(8px);
+}
+.brand { display: flex; gap: 14px; align-items: center; }
+.brand-mark {
+  width: 42px; height: 42px; border-radius: 10px;
+  display: grid; place-items: center;
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; font-weight: 700;
+  background: linear-gradient(135deg, var(--accent), #ffcf5c);
+  color: #1a1200;
+}
+.brand-name { font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 20px; font-weight: 700; letter-spacing: 0.02em; }
+.brand-sub { color: var(--muted); font-size: 12px; margin-top: 2px; }
+.who { color: var(--muted); margin-right: 12px; }
+.login-panel {
+  width: min(420px, 92vw); margin: 10vh auto; padding: 28px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
+  display: grid; gap: 12px;
+}
+.login-panel h1 { margin: 0; font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; font-weight: 700; }
+.hint, .err { color: var(--muted); margin: 0; }
+.err { color: var(--danger); }
+label { display: grid; gap: 6px; font-size: 13px; color: var(--muted); }
+input, select, textarea {
+  background: #0d1828; border: 1px solid var(--line); color: var(--ink);
+  border-radius: 10px; padding: 10px 12px; font: inherit;
+}
+button {
+  border: 0; border-radius: 10px; padding: 10px 14px; cursor: pointer; font: inherit;
+}
+button.primary { background: var(--accent); color: #1a1200; font-weight: 700; }
+button.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+button.danger { background: var(--danger); color: #fff; font-weight: 700; }
+.shell { display: grid; grid-template-columns: 200px 1fr; min-height: calc(100vh - 74px); }
+.rail {
+  background: var(--rail); border-right: 1px solid var(--line);
+  padding: 16px 10px; display: grid; gap: 6px; align-content: start;
+}
+.rail button {
+  text-align: left; background: transparent; color: var(--muted); padding: 10px 12px;
+}
+.rail button.on { background: rgba(240,162,2,.14); color: var(--accent); font-weight: 600; }
+.stage { padding: 22px 26px 40px; }
+.panel {
+  background: rgba(22,38,61,.88); border: 1px solid var(--line);
+  border-radius: 16px; padding: 18px 18px 8px; margin-bottom: 16px;
+}
+.panel h2 { margin: 0 0 8px; font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 18px; font-weight: 700; }
+.panel p.lead { color: var(--muted); margin: 0 0 14px; font-size: 13px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit,minmax(140px,1fr)); gap: 12px; }
+.stat {
+  background: #0d1828; border-radius: 12px; padding: 14px; border: 1px solid var(--line);
+}
+.stat b { display: block; font-size: 22px; font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; font-weight: 700; }
+.stat span { color: var(--muted); font-size: 12px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; }
+.row-form { display: grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap: 10px; margin-bottom: 12px; }
+.badge {
+  display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px;
+  background: rgba(62,207,142,.15); color: var(--accent2);
+}
+.badge.warn { background: rgba(240,162,2,.15); color: var(--accent); }
+.badge.bad { background: rgba(255,107,107,.15); color: var(--danger); }
+.two-col { display: grid; grid-template-columns: 1.2fr .8fr; gap: 16px; }
+@media (max-width: 960px) {
+  .shell { grid-template-columns: 1fr; }
+  .rail { grid-auto-flow: column; overflow-x: auto; }
+  .two-col { grid-template-columns: 1fr; }
+}

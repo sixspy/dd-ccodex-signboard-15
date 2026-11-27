@@ -1,0 +1,82 @@
+[
+  {
+    "code": "img_welcome",
+    "title": "欢迎图",
+    "kind": "image",
+    "duration_sec": 12,
+    "resolution": "1920x1080",
+    "status": "ready",
+    "owner": "admin",
+    "checksum": "a1"
+  },
+  {
+    "code": "vid_safety",
+    "title": "安全须知视频",
+    "kind": "video",
+    "duration_sec": 45,
+    "resolution": "1920x1080",
+    "status": "ready",
+    "owner": "writer",
+    "checksum": "b2"
+  },
+  {
+    "code": "html_menu",
+    "title": "今日菜单页",
+    "kind": "html",
+    "duration_sec": 20,
+    "resolution": "1080x1920",
+    "status": "ready",
+    "owner": "writer",
+    "checksum": "c3"
+  },
+  {
+    "code": "tick_notice",
+    "title": "滚动公告",
+    "kind": "ticker",
+    "duration_sec": 8,
+    "resolution": "1920x1080",
+    "status": "ready",
+    "owner": "admin",
+    "checksum": "d4"
+  },
+  {
+    "code": "img_event",
+    "title": "活动海报",
+    "kind": "image",
+    "duration_sec": 15,
+    "resolution": "1080x1920",
+    "status": "ready",
+    "owner": "writer",
+    "checksum": "e5"
+  },
+  {
+    "code": "img_draft",
+    "title": "未审海报",
+    "kind": "image",
+    "duration_sec": 10,
+    "resolution": "1920x1080",
+    "status": "draft",
+    "owner": "writer",
+    "checksum": "f6"
+  },
+  {
+    "code": "vid_brand",
+    "title": "品牌片",
+    "kind": "video",
+    "duration_sec": 60,
+    "resolution": "3840x2160",
+    "status": "ready",
+    "owner": "admin",
+    "checksum": "g7"
+  },
+  {
+    "code": "html_wayfind",
+    "title": "寻路页",
+    "kind": "html",
+    "duration_sec": 25,
+    "resolution": "1920x1080",
+    "status": "ready",
+    "owner": "admin",
+    "checksum": "h8"
+  }
+]

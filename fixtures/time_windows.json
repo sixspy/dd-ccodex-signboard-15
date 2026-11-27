@@ -1,0 +1,35 @@
+[
+  {
+    "code": "win_workday",
+    "title": "工作日日间",
+    "start_hm": "08:00",
+    "end_hm": "19:00",
+    "weekdays": "1,2,3,4,5",
+    "status": "open"
+  },
+  {
+    "code": "win_evening",
+    "title": "晚间延展",
+    "start_hm": "19:00",
+    "end_hm": "22:00",
+    "weekdays": "1,2,3,4,5",
+    "status": "open"
+  },
+  {
+    "code": "win_weekend",
+    "title": "周末开放",
+    "start_hm": "10:00",
+    "end_hm": "18:00",
+    "weekdays": "6,7",
+    "status": "open"
+  },
+  {
+    "code": "win_closed",
+    "title": "已关闭窗",
+    "start_hm": "00:00",
+    "end_hm": "06:00",
+    "weekdays": "1,2,3,4,5",
+    "status": "closed",
+    "note": "停用"
+  }
+]

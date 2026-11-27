@@ -1,0 +1,44 @@
+[
+  {
+    "playlist_code": "pl_lobby_day",
+    "asset_code": "img_welcome",
+    "seq": 1,
+    "dwell_sec": 12
+  },
+  {
+    "playlist_code": "pl_lobby_day",
+    "asset_code": "vid_safety",
+    "seq": 2,
+    "dwell_sec": 45
+  },
+  {
+    "playlist_code": "pl_lobby_day",
+    "asset_code": "tick_notice",
+    "seq": 3,
+    "dwell_sec": 8
+  },
+  {
+    "playlist_code": "pl_lift_loop",
+    "asset_code": "html_menu",
+    "seq": 1,
+    "dwell_sec": 20
+  },
+  {
+    "playlist_code": "pl_lift_loop",
+    "asset_code": "img_event",
+    "seq": 2,
+    "dwell_sec": 15
+  },
+  {
+    "playlist_code": "pl_meet_guide",
+    "asset_code": "html_wayfind",
+    "seq": 1,
+    "dwell_sec": 25
+  },
+  {
+    "playlist_code": "pl_meet_guide",
+    "asset_code": "img_welcome",
+    "seq": 2,
+    "dwell_sec": 12
+  }
+]

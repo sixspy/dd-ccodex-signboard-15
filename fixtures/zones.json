@@ -1,0 +1,37 @@
+[
+  {
+    "code": "lobby_a",
+    "title": "A座大堂",
+    "zone_type": "lobby",
+    "risk_level": 3,
+    "floor_label": "1F"
+  },
+  {
+    "code": "lift_b3",
+    "title": "B座电梯厅3层",
+    "zone_type": "elevator",
+    "risk_level": 2,
+    "floor_label": "3F"
+  },
+  {
+    "code": "corr_c2",
+    "title": "C座走廊2层",
+    "zone_type": "corridor",
+    "risk_level": 2,
+    "floor_label": "2F"
+  },
+  {
+    "code": "meet_d1",
+    "title": "D座多功能厅",
+    "zone_type": "meeting",
+    "risk_level": 3,
+    "floor_label": "1F"
+  },
+  {
+    "code": "yard_east",
+    "title": "东侧室外立柱屏",
+    "zone_type": "outdoor",
+    "risk_level": 4,
+    "floor_label": "G"
+  }
+]

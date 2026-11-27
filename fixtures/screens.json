@@ -1,0 +1,48 @@
+[
+  {
+    "code": "scr_lobby_main",
+    "title": "大堂主屏",
+    "zone_code": "lobby_a",
+    "resolution": "1920x1080",
+    "status": "online",
+    "orientation": "landscape"
+  },
+  {
+    "code": "scr_lobby_side",
+    "title": "大堂侧屏",
+    "zone_code": "lobby_a",
+    "resolution": "1080x1920",
+    "status": "online",
+    "orientation": "portrait"
+  },
+  {
+    "code": "scr_lift_b3",
+    "title": "电梯厅竖屏",
+    "zone_code": "lift_b3",
+    "resolution": "1080x1920",
+    "status": "online",
+    "orientation": "portrait"
+  },
+  {
+    "code": "scr_corr_c2",
+    "title": "走廊横条",
+    "zone_code": "corr_c2",
+    "resolution": "1920x1080",
+    "status": "offline"
+  },
+  {
+    "code": "scr_meet_d1",
+    "title": "多功能厅导览",
+    "zone_code": "meet_d1",
+    "resolution": "1920x1080",
+    "status": "online"
+  },
+  {
+    "code": "scr_yard_e1",
+    "title": "室外立柱",
+    "zone_code": "yard_east",
+    "resolution": "1080x1920",
+    "status": "maintenance",
+    "note": "面板检修"
+  }
+]

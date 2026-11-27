@@ -1,0 +1,32 @@
+[
+  {
+    "screen_code": "scr_lobby_main",
+    "playlist_code": "pl_lobby_day",
+    "window_code": "win_workday",
+    "layout_code": "lay_split",
+    "version": 3,
+    "summary": "大堂日间正式发布",
+    "status": "published",
+    "published_by": "admin"
+  },
+  {
+    "screen_code": "scr_lift_b3",
+    "playlist_code": "pl_lift_loop",
+    "window_code": "win_workday",
+    "layout_code": "lay_full",
+    "version": 2,
+    "summary": "电梯厅循环正式发布",
+    "status": "published",
+    "published_by": "writer"
+  },
+  {
+    "screen_code": "scr_meet_d1",
+    "playlist_code": "pl_meet_guide",
+    "window_code": "win_weekend",
+    "layout_code": "lay_lbar",
+    "version": 1,
+    "summary": "会议导览周末发布",
+    "status": "published",
+    "published_by": "admin"
+  }
+]
